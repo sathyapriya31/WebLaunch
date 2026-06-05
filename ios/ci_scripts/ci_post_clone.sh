@@ -1,32 +1,15 @@
 #!/bin/sh
 
-# Exit immediately if a command exits with a non-zero status
-set -e
+# Prevent CocoaPods from running as root
+export COCOAPODS_ALLOW_ROOT=1
 
-echo "=== Xcode Cloud Post-Clone Script ==="
+# Install Node.js (via Homebrew, pre-installed on Xcode Cloud)
+brew install node
 
-# Navigate to project root
+# Go to repository root and install JavaScript dependencies
 cd ../..
-echo "📍 Current directory: $(pwd)"
+npm install # or yarn install if using yarn
 
-# Install Node dependencies
-if [ -f yarn.lock ]; then
-  echo "📦 Installing Node dependencies using yarn..."
-  yarn install
-elif [ -f package-lock.json ]; then
-  echo "📦 Installing Node dependencies using npm..."
-  npm ci
-else
-  echo "📦 Installing Node dependencies..."
-  npm install
-fi
-
-# Navigate to iOS directory and run pod install
+# Go back to ios directory and install CocoaPods
 cd ios
-echo "📍 Current directory: $(pwd)"
-echo "🚀 Running pod install..."
 pod install
-
-echo "=== Post-Clone Configuration Complete ==="
-
- 

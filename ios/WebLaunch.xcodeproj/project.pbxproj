@@ -285,7 +285,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.spritle.weblaunch;
+				PRODUCT_BUNDLE_IDENTIFIER = com.spritle.weblaunchhub;
 				PRODUCT_NAME = "WebLaunch Hub";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -319,7 +319,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.spritle.weblaunch;
+				PRODUCT_BUNDLE_IDENTIFIER = com.spritle.weblaunchhub;
 				PRODUCT_NAME = "WebLaunch Hub";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
