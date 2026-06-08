@@ -255,8 +255,8 @@ jobs:
         if: ${{ inputs.build_type != 'testing' }}
         run: |
           mkdir -p distribution/whatsnew
-          echo "${{ inputs.release_notes }}" > distribution/whatsnew/whatsnew-default
-          echo "Created dynamic release notes file at distribution/whatsnew/whatsnew-default"
+          echo "${{ inputs.release_notes }}" > distribution/whatsnew/whatsnew-en-US
+          echo "Created dynamic release notes file at distribution/whatsnew/whatsnew-en-US"
 
       - name: Upload to Google Play Store (UAT & Production Release only)
         if: ${{ inputs.build_type != 'testing' }}
