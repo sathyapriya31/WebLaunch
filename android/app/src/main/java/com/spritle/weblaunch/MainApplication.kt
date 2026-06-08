@@ -1,4 +1,4 @@
-package com.weblaunch
+package com.spritle.weblaunch
 
 import android.app.Application
 import com.facebook.react.PackageList

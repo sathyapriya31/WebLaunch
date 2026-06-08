@@ -1,4 +1,4 @@
-package com.weblaunch
+package com.spritle.weblaunch
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
