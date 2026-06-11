@@ -3,7 +3,7 @@
  * Redesigned for premium aesthetics, presets, history, and browser controls.
  */
 
-import React, {useState, useRef} from 'react';
+import React, { useState, useRef } from 'react';
 import { WebView } from 'react-native-webview';
 import {
   StatusBar,
@@ -20,15 +20,17 @@ import {
   Easing,
   ActivityIndicator,
 } from 'react-native';
-import {
-  SafeAreaProvider,
-  SafeAreaView,
-} from 'react-native-safe-area-context';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 const PRESETS = [
   { id: 'google', name: 'Google', url: 'https://www.google.com', icon: '🔍' },
   { id: 'github', name: 'GitHub', url: 'https://github.com', icon: '🐙' },
-  { id: 'reactnative', name: 'React Native', url: 'https://reactnative.dev', icon: '⚛️' },
+  {
+    id: 'reactnative',
+    name: 'React Native',
+    url: 'https://reactnative.dev',
+    icon: '⚛️',
+  },
 ];
 
 const getTheme = (isDark: boolean) => ({
@@ -36,13 +38,13 @@ const getTheme = (isDark: boolean) => ({
   card: isDark ? '#1e293b' : '#ffffff',
   text: isDark ? '#f8fafc' : '#0f172a',
   textMuted: isDark ? '#94a3b8' : '#64748b',
-  primary: isDark ? '#818cf8' : '#6366f1',
+  primary: isDark ? '#14aed5' : '#6366f1',
   primaryLight: isDark ? '#1e1b4b' : '#e0e7ff',
   border: isDark ? '#334155' : '#e2e8f0',
   inputBg: isDark ? '#1e293b' : '#ffffff',
   headerBg: isDark ? '#1e293b' : '#ffffff',
   divider: isDark ? '#334155' : '#e2e8f0',
-  statusBar: isDark ? 'light-content' as const : 'dark-content' as const,
+  statusBar: isDark ? ('light-content' as const) : ('dark-content' as const),
   shadow: isDark
     ? {
         shadowColor: '#000000',
@@ -123,8 +125,8 @@ function AppContent() {
     setUrlInput(normalized);
 
     // Add to history and keep unique
-    setHistory((prev) => {
-      const filtered = prev.filter((item) => item !== normalized);
+    setHistory(prev => {
+      const filtered = prev.filter(item => item !== normalized);
       return [normalized, ...filtered].slice(0, 5);
     });
 
@@ -144,7 +146,7 @@ function AppContent() {
   };
 
   const removeHistoryItem = (urlToRemove: string) => {
-    setHistory((prev) => prev.filter((url) => url !== urlToRemove));
+    setHistory(prev => prev.filter(url => url !== urlToRemove));
   };
 
   // WebView lifecycle handlers
@@ -194,20 +196,39 @@ function AppContent() {
   });
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: theme.bg }]} edges={['top', 'bottom']}>
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: theme.bg }]}
+      edges={['top', 'bottom']}
+    >
       {openUrl ? (
         <View style={styles.webContainer}>
           {/* WebView Header Bar */}
-          <View style={[styles.webHeader, { backgroundColor: theme.headerBg, borderBottomColor: theme.border }]}>
+          <View
+            style={[
+              styles.webHeader,
+              {
+                backgroundColor: theme.headerBg,
+                borderBottomColor: theme.border,
+              },
+            ]}
+          >
             <TouchableOpacity
               onPress={() => setOpenUrl(null)}
-              style={[styles.backButton, { backgroundColor: theme.primaryLight }]}
+              style={[
+                styles.backButton,
+                { backgroundColor: theme.primaryLight },
+              ]}
             >
-              <Text style={[styles.backText, { color: theme.primary }]}>✕ Close</Text>
+              <Text style={[styles.backText, { color: theme.primary }]}>
+                ✕ Close
+              </Text>
             </TouchableOpacity>
 
             <View style={styles.headerTitleContainer}>
-              <Text numberOfLines={1} style={[styles.headerTitle, { color: theme.text }]}>
+              <Text
+                numberOfLines={1}
+                style={[styles.headerTitle, { color: theme.text }]}
+              >
                 {getDisplayDomain(openUrl)}
               </Text>
             </View>
@@ -217,14 +238,26 @@ function AppContent() {
               style={styles.refreshButton}
               title="Refresh"
             >
-              <Text style={[styles.refreshIcon, { color: theme.textMuted }]}>↻</Text>
+              <Text style={[styles.refreshIcon, { color: theme.textMuted }]}>
+                ↻
+              </Text>
             </TouchableOpacity>
           </View>
 
           {/* Animated Progress Bar */}
           {isLoading && (
-            <View style={[styles.progressContainer, { backgroundColor: theme.divider }]}>
-              <Animated.View style={[styles.progressBar, { width: progressWidth, backgroundColor: theme.primary }]} />
+            <View
+              style={[
+                styles.progressContainer,
+                { backgroundColor: theme.divider },
+              ]}
+            >
+              <Animated.View
+                style={[
+                  styles.progressBar,
+                  { width: progressWidth, backgroundColor: theme.primary },
+                ]}
+              />
             </View>
           )}
 
@@ -239,20 +272,32 @@ function AppContent() {
             onNavigationStateChange={handleNavigationStateChange}
             style={styles.webview}
             renderLoading={() => (
-              <View style={[styles.loaderOverlay, { backgroundColor: theme.bg }]}>
+              <View
+                style={[styles.loaderOverlay, { backgroundColor: theme.bg }]}
+              >
                 <ActivityIndicator size="large" color={theme.primary} />
               </View>
             )}
           />
 
           {/* Browser Navigation Footer */}
-          <View style={[styles.webFooter, { backgroundColor: theme.headerBg, borderTopColor: theme.border }]}>
+          <View
+            style={[
+              styles.webFooter,
+              { backgroundColor: theme.headerBg, borderTopColor: theme.border },
+            ]}
+          >
             <TouchableOpacity
               onPress={() => webviewRef.current?.goBack()}
               disabled={!canGoBack}
               style={[styles.navButton, !canGoBack && styles.navButtonDisabled]}
             >
-              <Text style={[styles.navButtonText, { color: canGoBack ? theme.primary : theme.textMuted }]}>
+              <Text
+                style={[
+                  styles.navButtonText,
+                  { color: canGoBack ? theme.primary : theme.textMuted },
+                ]}
+              >
                 ◀ Back
               </Text>
             </TouchableOpacity>
@@ -260,33 +305,63 @@ function AppContent() {
             <TouchableOpacity
               onPress={() => webviewRef.current?.goForward()}
               disabled={!canGoForward}
-              style={[styles.navButton, !canGoForward && styles.navButtonDisabled]}
+              style={[
+                styles.navButton,
+                !canGoForward && styles.navButtonDisabled,
+              ]}
             >
-              <Text style={[styles.navButtonText, { color: canGoForward ? theme.primary : theme.textMuted }]}>
+              <Text
+                style={[
+                  styles.navButtonText,
+                  { color: canGoForward ? theme.primary : theme.textMuted },
+                ]}
+              >
                 Forward ▶
               </Text>
             </TouchableOpacity>
           </View>
         </View>
       ) : (
-        <ScrollView contentContainerStyle={styles.scrollContainer} keyboardShouldPersistTaps="handled">
-          
+        <ScrollView
+          contentContainerStyle={styles.scrollContainer}
+          keyboardShouldPersistTaps="handled"
+        >
           {/* Brand Header */}
           <View style={styles.brandContainer}>
-            <View style={[styles.brandIconWrap, { backgroundColor: theme.primaryLight }]}>
+            <View
+              style={[
+                styles.brandIconWrap,
+                { backgroundColor: theme.primaryLight },
+              ]}
+            >
               <Text style={styles.brandIcon}>🌐</Text>
             </View>
-            <Text style={[styles.brandTitle, { color: theme.text }]}>WebLaunch</Text>
+            <Text style={[styles.brandTitle, { color: theme.text }]}>
+              WebLaunch
+            </Text>
             <Text style={[styles.brandSubtitle, { color: theme.textMuted }]}>
               Instantly run websites inside a clean, native app container
             </Text>
           </View>
 
           {/* Form Card */}
-          <View style={[styles.card, theme.shadow, { backgroundColor: theme.card, borderColor: theme.border }]}>
-            <Text style={[styles.cardTitle, { color: theme.text }]}>Launch Workspace</Text>
-            
-            <View style={[styles.inputWrapper, { borderColor: theme.border, backgroundColor: theme.inputBg }]}>
+          <View
+            style={[
+              styles.card,
+              theme.shadow,
+              { backgroundColor: theme.card, borderColor: theme.border },
+            ]}
+          >
+            <Text style={[styles.cardTitle, { color: theme.text }]}>
+              Launch Workspace
+            </Text>
+
+            <View
+              style={[
+                styles.inputWrapper,
+                { borderColor: theme.border, backgroundColor: theme.inputBg },
+              ]}
+            >
               <Text style={styles.inputPrefix}>🔗</Text>
               <TextInput
                 style={[styles.input, { color: theme.text }]}
@@ -301,8 +376,15 @@ function AppContent() {
                 onSubmitEditing={handleLaunchPress}
               />
               {urlInput.length > 0 && (
-                <TouchableOpacity onPress={clearInput} style={styles.clearButton}>
-                  <Text style={[styles.clearButtonText, { color: theme.textMuted }]}>✖</Text>
+                <TouchableOpacity
+                  onPress={clearInput}
+                  style={styles.clearButton}
+                >
+                  <Text
+                    style={[styles.clearButtonText, { color: theme.textMuted }]}
+                  >
+                    ✖
+                  </Text>
                 </TouchableOpacity>
               )}
             </View>
@@ -312,23 +394,30 @@ function AppContent() {
               style={[styles.openButton, { backgroundColor: theme.primary }]}
               activeOpacity={0.85}
             >
-              <Text style={styles.openButtonText}>Launch Workspace</Text>
+              <Text style={styles.openButtonText}>Launch Workspaces</Text>
             </TouchableOpacity>
           </View>
 
           {/* Presets Grid */}
           <View style={styles.section}>
-            <Text style={[styles.sectionTitle, { color: theme.text }]}>Quick Presets</Text>
+            <Text style={[styles.sectionTitle, { color: theme.text }]}>
+              Quick Presets
+            </Text>
             <View style={styles.presetsGrid}>
-              {PRESETS.map((preset) => (
+              {PRESETS.map(preset => (
                 <TouchableOpacity
                   key={preset.id}
                   onPress={() => handlePresetPress(preset.url)}
-                  style={[styles.presetCard, { backgroundColor: theme.card, borderColor: theme.border }]}
+                  style={[
+                    styles.presetCard,
+                    { backgroundColor: theme.card, borderColor: theme.border },
+                  ]}
                   activeOpacity={0.7}
                 >
                   <Text style={styles.presetIcon}>{preset.icon}</Text>
-                  <Text style={[styles.presetName, { color: theme.text }]}>{preset.name}</Text>
+                  <Text style={[styles.presetName, { color: theme.text }]}>
+                    {preset.name}
+                  </Text>
                 </TouchableOpacity>
               ))}
             </View>
@@ -337,14 +426,24 @@ function AppContent() {
           {/* Launch History */}
           {history.length > 0 && (
             <View style={styles.section}>
-              <Text style={[styles.sectionTitle, { color: theme.text }]}>Recent Launches</Text>
-              <View style={[styles.historyContainer, { backgroundColor: theme.card, borderColor: theme.border }]}>
+              <Text style={[styles.sectionTitle, { color: theme.text }]}>
+                Recent Launches
+              </Text>
+              <View
+                style={[
+                  styles.historyContainer,
+                  { backgroundColor: theme.card, borderColor: theme.border },
+                ]}
+              >
                 {history.map((url, idx) => (
                   <View
                     key={url + idx}
                     style={[
                       styles.historyItem,
-                      idx < history.length - 1 && { borderBottomColor: theme.divider, borderBottomWidth: 1 }
+                      idx < history.length - 1 && {
+                        borderBottomColor: theme.divider,
+                        borderBottomWidth: 1,
+                      },
                     ]}
                   >
                     <TouchableOpacity
@@ -353,7 +452,10 @@ function AppContent() {
                       activeOpacity={0.6}
                     >
                       <Text style={styles.historyIcon}>⏱</Text>
-                      <Text numberOfLines={1} style={[styles.historyText, { color: theme.text }]}>
+                      <Text
+                        numberOfLines={1}
+                        style={[styles.historyText, { color: theme.text }]}
+                      >
                         {getDisplayDomain(url)}
                       </Text>
                     </TouchableOpacity>
@@ -361,14 +463,20 @@ function AppContent() {
                       onPress={() => removeHistoryItem(url)}
                       style={styles.historyDelete}
                     >
-                      <Text style={[styles.historyDeleteText, { color: theme.textMuted }]}>✖</Text>
+                      <Text
+                        style={[
+                          styles.historyDeleteText,
+                          { color: theme.textMuted },
+                        ]}
+                      >
+                        ✖
+                      </Text>
                     </TouchableOpacity>
                   </View>
                 ))}
               </View>
             </View>
           )}
-
         </ScrollView>
       )}
     </SafeAreaView>
